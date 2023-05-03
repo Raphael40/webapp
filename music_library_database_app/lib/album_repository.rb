@@ -47,8 +47,8 @@ class AlbumRepository
     return album
   end
 
-  # def delete(id)
-  #   sql = 'DELETE FROM albums WHERE id = $1;';
-  #   DatabaseConnection.exec_params(sql, [id]);
-  # end
+  def delete(id)
+    sql = 'DELETE FROM albums WHERE id = $1;';
+    DatabaseConnection.exec_params(sql, [id]);
+  end
 end

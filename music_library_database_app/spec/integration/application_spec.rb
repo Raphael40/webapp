@@ -34,11 +34,23 @@ describe Application do
     it 'returns a list of albums' do
       response = get('/albums')
 
-      expected_response = 'Doolittle, Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring'
+      expected_response = "<div>Title: Doolittle Released: 1989</div>"
+      expected_response_2 = "<div>Title: Surfer Rosa Released: 1988</div>"
 
       expect(response.status).to eq(200)
-      expect(response.body).to eq(expected_response)
+      expect(response.body).to include(expected_response)
+      expect(response.body).to include(expected_response_2)
 
+    end
+
+    it 'returns a list of albums' do
+      response = get('/albums')
+
+      expected_response = "<div>Title: Here Comes the Sun Released: 1971</div>"
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include(expected_response)
+      
     end
   end
 
@@ -84,5 +96,6 @@ describe Application do
       expect(response.body).to include('Wild Nothing')
     end
   end
+
 
 end
