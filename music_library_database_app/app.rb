@@ -14,11 +14,19 @@ class Application < Sinatra::Base
     also_reload 'lib/artist_repository'
   end
 
+  get '/' do
+    return erb(:index)
+  end
+
+  get '/about' do
+    return erb(:about)
+  end
+
   get '/albums' do
     repo = AlbumRepository.new
     @albums = repo.all
 
-    return erb(:index)
+    return erb(:albums)
   end
 
   post '/albums' do
@@ -31,6 +39,21 @@ class Application < Sinatra::Base
     repo.create(album)
 
     return ''
+  end
+
+  get '/albums/:id' do
+    album_repo = AlbumRepository.new
+    album = album_repo.find(params[:id])
+
+    @album_title = album.title
+    @release_year = album.release_year
+    
+    artist_repo = ArtistRepository.new
+    artist = artist_repo.find(album.artist_id)
+    @artist_name = artist.name
+
+    return erb(:album)
+
   end
 
   get '/artists' do

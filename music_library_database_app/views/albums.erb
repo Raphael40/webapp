@@ -1,0 +1,11 @@
+<html>
+  <head></head>
+  <body style="background-image:url('https://static01.nyt.com/images/2020/03/05/us/05xp-clinton/merlin_11228189_0be33503-799d-4877-977c-9f3fb6db2496-superJumbo.jpg');">
+    <h1>Albums</h1>
+
+    <% @albums.each do |album| %>
+    <a href="/albums/<%= album.id%>">Title: <%= album.title %> Released: <%= album.release_year %></a><br />
+    <% end %>
+
+  </body>
+</html>

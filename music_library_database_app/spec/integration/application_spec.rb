@@ -34,23 +34,15 @@ describe Application do
     it 'returns a list of albums' do
       response = get('/albums')
 
-      expected_response = "<div>Title: Doolittle Released: 1989</div>"
-      expected_response_2 = "<div>Title: Surfer Rosa Released: 1988</div>"
+      expected_response_0 = '<a href="/albums/1">Title: Doolittle Released: 1989</a>'
+      expected_response_1 = '<a href="/albums/2">Title: Surfer Rosa Released: 1988</a>'
+      expected_response_10 = '<a href="/albums/10">Title: Here Comes the Sun Released: 1971</a>'
 
       expect(response.status).to eq(200)
-      expect(response.body).to include(expected_response)
-      expect(response.body).to include(expected_response_2)
+      expect(response.body).to include(expected_response_0)
+      expect(response.body).to include(expected_response_1)
+      expect(response.body).to include(expected_response_10)
 
-    end
-
-    it 'returns a list of albums' do
-      response = get('/albums')
-
-      expected_response = "<div>Title: Here Comes the Sun Released: 1971</div>"
-
-      expect(response.status).to eq(200)
-      expect(response.body).to include(expected_response)
-      
     end
   end
 
@@ -68,6 +60,16 @@ describe Application do
 
       response = get('/albums')
       expect(response.body).to include('Voyage')
+    end
+  end
+
+  context 'GET /albums/:id' do
+    it 'returns the data of a single album formatted in html' do
+      response = get('/albums/1')
+      expect(response.status).to eq (200)
+      expect(response.body).to include ('<h1>Doolittle</h1>')
+      expect(response.body).to include ('Release year: 1989')
+      expect(response.body).to include ('Artist: Pixies')      
     end
   end
 
