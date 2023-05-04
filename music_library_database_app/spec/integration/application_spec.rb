@@ -54,12 +54,13 @@ describe Application do
         release_year:"2022",
         artist_id:"2"
       )
-
+      
       expect(response.status).to eq(200)
-      expect(response.body).to eq('')
+      expect(response.body).to include('<h1>Voyage has been added</h1>')
 
-      response = get('/albums')
-      expect(response.body).to include('Voyage')
+      get_albums = get('/albums')
+
+      expect(get_albums.body).to include('Voyage')
     end
   end
 
@@ -77,9 +78,14 @@ describe Application do
     it 'returns a list of artists' do
       response = get('/artists')
 
-      expect(response.status).to eq(200)
-      expect(response.body).to eq('Pixies, ABBA, Taylor Swift, Nina Simone')
+      expected_response_0 = '<a href="/artists/1">Artist: Pixies Genre: Rock</a>'
+      expected_response_1 = '<a href="/artists/2">Artist: ABBA Genre: Pop</a>'
+      expected_response_2 = '<a href="/artists/3">Artist: Taylor Swift Genre: Pop</a>'
 
+      expect(response.status).to eq(200)
+      expect(response.body).to include(expected_response_0)
+      expect(response.body).to include(expected_response_1)
+      expect(response.body).to include(expected_response_2)
     end
   end
 
@@ -108,4 +114,15 @@ describe Application do
     end
   end
 
+    context 'GET /albums/new' do
+      it 'returns a form page' do
+        response = get("/albums/new")
+
+        expect(response.status).to eq(200)
+        expect(response.body).to include('<form method="POST" action="/albums">')
+        expect(response.body).to include('<input type="text" name="title" />')
+        expect(response.body).to include('<input type="text" name="release_year" />')
+        expect(response.body).to include('<input type="text" name="artist_id" />')
+      end
+    end
 end
