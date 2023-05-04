@@ -17,4 +17,8 @@ class Application < Sinatra::Base
 
     return names.split(",").sort.join(",")
   end
+
+  get '/hello' do
+    return erb(:index)
+  end
 end
