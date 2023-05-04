@@ -99,5 +99,13 @@ describe Application do
     end
   end
 
+  context 'GET /artists/:id' do
+    it 'returns the data of a single album formatted in html' do
+      response = get('/artists/1')
+      expect(response.status).to eq (200)
+      expect(response.body).to include ('Pixies')
+      expect(response.body).to include ('Genre: Rock')
+    end
+  end
 
 end
